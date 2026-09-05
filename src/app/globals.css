@@ -1,0 +1,622 @@
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN TOKENS — Single source of truth for the entire site.
+   Every component should consume these variables; never hard-
+   code raw color/font/easing values in component files.
+   ============================================================ */
+
+:root {
+  /* --- Colors --- */
+  --color-bg:             #000000;   /* Pure black */
+  --color-bg-elevated:    #0a0a0a;   /* Near-black for cards/sections */
+  --color-bg-subtle:      #111111;   /* Subtle lift */
+  --color-border:         #1a1a1a;   /* Very dim grid lines */
+
+  --color-accent:         #6C63FF;   /* Electric violet — primary */
+  --color-accent-glow:    #8B5CF6;   /* Lighter violet for gradients / bloom */
+  --color-accent-cyan:    #06B6D4;   /* Gradient tail / tech shimmer */
+  --color-accent-teal:    #00D9B1;   /* Secondary CTA / skill icons */
+
+  --color-text-primary:   #F2F2F2;
+  --color-text-secondary: #9CA3AF;
+  --color-text-dim:       #4B5563;
+
+  /* Gradient shorthand — guide glow, hero elements */
+  --gradient-accent: linear-gradient(135deg, #6C63FF 0%, #8B5CF6 50%, #06B6D4 100%);
+
+  /* --- Typography --- */
+  /* Wired to next/font variables injected by layout.tsx */
+  --font-display: var(--font-space-grotesk), "Space Grotesk", system-ui, sans-serif;
+  --font-body:    var(--font-inter), "Inter", system-ui, sans-serif;
+  --font-mono:    var(--font-jetbrains-mono), "JetBrains Mono", "Fira Code", monospace;
+
+  /* Fluid type scale */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  1.875rem;
+  --text-4xl:  clamp(2rem, 5vw, 3rem);
+  --text-hero: clamp(3rem, 9vw, 7rem);
+
+  /* --- Easing curves --- */
+  --ease-out-expo:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring:       cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* --- Durations --- */
+  --duration-fast:   150ms;
+  --duration-base:   300ms;
+  --duration-slow:   600ms;
+  --duration-slower: 900ms;
+
+  /* --- Radii --- */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
+  --radius-full: 9999px;
+
+  /* --- Shadows / glows --- */
+  --glow-accent:    0 0 24px 4px rgba(108, 99, 255, 0.35);
+  --glow-teal:      0 0 20px 2px rgba(0, 217, 177, 0.3);
+  --shadow-card:    0 4px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================================
+   TAILWIND v4  @theme — exposes tokens as Tailwind utilities.
+   Use tw classes like bg-bg, text-accent, font-display, etc.
+   ============================================================ */
+@theme inline {
+  /* Backgrounds */
+  --color-bg:           var(--color-bg);
+  --color-bg-elevated:  var(--color-bg-elevated);
+  --color-bg-subtle:    var(--color-bg-subtle);
+  --color-border:       var(--color-border);
+
+  /* Accents */
+  --color-accent:       var(--color-accent);
+  --color-accent-glow:  var(--color-accent-glow);
+  --color-accent-cyan:  var(--color-accent-cyan);
+  --color-accent-teal:  var(--color-accent-teal);
+
+  /* Text */
+  --color-text-primary:   var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-dim:       var(--color-text-dim);
+
+  /* Fonts */
+  --font-display: var(--font-display);
+  --font-body:    var(--font-body);
+  --font-mono:    var(--font-mono);
+}
+
+/* ============================================================
+   BASE RESETS
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* Selection highlight */
+::selection {
+  background-color: rgba(108, 99, 255, 0.35);
+  color: var(--color-text-primary);
+}
+
+/* Scrollbar (webkit) — subtle dark style */
+::-webkit-scrollbar        { width: 6px; }
+::-webkit-scrollbar-track  { background: var(--color-bg); }
+::-webkit-scrollbar-thumb  { background: var(--color-bg-subtle); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
+
+/* Focus visible — keyboard nav */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Skip to content — WCAG 2.4.1 bypass blocks ──────────────────────── */
+/* Visually hidden until focused by keyboard; slides down into view.      */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 1rem;
+  z-index: 200;
+  padding: 0.65rem 1.25rem;
+  background: var(--color-accent);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  transition: top 0.15s ease;
+}
+.skip-link:focus {
+  top: 0;
+  outline: none; /* focus is evident from the element becoming visible */
+}
+
+
+/* ============================================================
+   REDUCED MOTION — disable non-essential animations globally.
+   Individual components should also respect this.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   TYPOGRAPHY UTILITIES
+   ============================================================ */
+.font-display { font-family: var(--font-display); }
+.font-body    { font-family: var(--font-body); }
+.font-mono    { font-family: var(--font-mono); }
+
+.text-hero    { font-size: var(--text-hero); }
+.text-4xl-fluid { font-size: var(--text-4xl); }
+
+/* Gradient text utility */
+.text-gradient {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ============================================================
+   LAYOUT UTILITIES
+   ============================================================ */
+.container-site {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 5vw, 2.5rem);
+}
+
+/* Section vertical rhythm */
+.section-padding {
+  padding-block: clamp(5rem, 12vw, 9rem);
+}
+
+/* ============================================================
+   COMPONENT UTILITIES
+   Shared interactive primitives — use these in components
+   instead of duplicating hover/focus logic.
+   ============================================================ */
+
+/* Nav link — underline draw on hover */
+.nav-link {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  position: relative;
+  transition: color var(--duration-fast) ease;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gradient-accent);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-base) var(--ease-out-expo);
+}
+.nav-link:hover             { color: var(--color-text-primary); }
+.nav-link:hover::after      { width: 100%; }
+.nav-link[aria-current]     { color: var(--color-text-primary); }
+.nav-link[aria-current]::after { width: 100%; }
+
+/* Ghost button */
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-full);
+  padding: 0.45rem 1.1rem;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: border-color var(--duration-fast), color var(--duration-fast);
+}
+.btn-ghost:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* Primary filled button */
+.btn-primary {
+  background: var(--color-accent);
+  border: none;
+  color: #fff;
+  border-radius: var(--radius-full);
+  padding: 0.75rem 2rem;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background var(--duration-fast), box-shadow var(--duration-fast),
+    transform var(--duration-fast);
+  box-shadow: 0 0 20px rgba(108, 99, 255, 0.3);
+}
+.btn-primary:hover {
+  background: var(--color-accent-glow);
+  box-shadow: var(--glow-accent);
+  transform: translateY(-1px);
+}
+
+/* Section label — small mono eyebrow above headings */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-accent);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+/* Card — elevated surface */
+.card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-card);
+  transition: border-color var(--duration-base) ease,
+    box-shadow var(--duration-base) ease;
+}
+.card:hover {
+  border-color: rgba(108, 99, 255, 0.35);
+  box-shadow: 0 8px 48px rgba(0, 0, 0, 0.6),
+    0 0 32px rgba(108, 99, 255, 0.08);
+}
+
+/* Tech / skill tag pill */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 0.2rem 0.65rem;
+  white-space: nowrap;
+}
+
+/* Prompt chip — hero suggestions */
+.prompt-chip {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: color var(--duration-fast), border-color var(--duration-fast),
+    background var(--duration-fast);
+  white-space: nowrap;
+}
+.prompt-chip:hover {
+  color: var(--color-accent);
+  border-color: rgba(108, 99, 255, 0.5);
+  background: rgba(108, 99, 255, 0.06);
+}
+
+/* Form input */
+.form-input {
+  width: 100%;
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.8rem 1rem;
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  outline: none;
+  resize: none;
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+}
+.form-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.12);
+}
+.form-input::placeholder { color: var(--color-text-dim); }
+
+/* Social link icon button */
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--duration-fast);
+}
+.social-link:hover { color: var(--color-text-primary); }
+
+/* Highlight detail block */
+.detail-highlight {
+  border-left: 2px solid var(--color-accent);
+  padding-left: 1rem;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  font-size: var(--text-sm);
+}
+
+/* Project card — accent-colored hover glow using scoped --project-accent */
+.project-card:hover {
+  border-color: color-mix(in srgb, var(--project-accent) 40%, transparent);
+  box-shadow:
+    0 12px 48px rgba(0, 0, 0, 0.6),
+    0 0 32px color-mix(in srgb, var(--project-accent) 12%, transparent);
+  transform: translateY(-3px);
+}
+
+/* ── Form input ───────────────────────────────────────────────────────── */
+.form-input {
+  width: 100%;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 0.75rem 1rem;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text-primary);
+  outline: none;
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+  resize: vertical; /* for textarea */
+}
+.form-input::placeholder {
+  color: var(--color-text-dim);
+}
+.form-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15);
+}
+
+/* ── Social link ──────────────────────────────────────────────────────── */
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  padding: 0.5rem 0;
+  transition: color var(--duration-fast);
+}
+.social-link:hover {
+  color: var(--color-text-primary);
+}
+
+/* ── Guide Orb ────────────────────────────────────────────────────────── */
+/* 3-D ring illusion: rotateX tilts the ring; rotateZ spins it */
+@keyframes guide-ring-cw {
+  from { transform: rotateX(74deg) rotateZ(0deg); }
+  to   { transform: rotateX(74deg) rotateZ(360deg); }
+}
+@keyframes guide-ring-ccw {
+  from { transform: rotateX(64deg) rotateZ(0deg); }
+  to   { transform: rotateX(64deg) rotateZ(-360deg); }
+}
+/* Wisp particles orbit around the orb center */
+@keyframes guide-wisp {
+  from { transform: rotate(0deg) translateX(34px); }
+  to   { transform: rotate(360deg) translateX(34px); }
+}
+
+/* Perspective container for the rings */
+.guide-orb-rings {
+  position: absolute;
+  inset: 0;
+  perspective: 200px;
+  perspective-origin: 50% 50%;
+  pointer-events: none;
+}
+
+.guide-ring {
+  position: absolute;
+  border-radius: 50%;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  pointer-events: none;
+}
+.guide-ring-cw {
+  inset: -8px;
+  border: 1px solid rgba(108, 99, 255, 0.3);
+  animation-name: guide-ring-cw;
+  animation-duration: var(--ring-dur, 14s);
+}
+.guide-ring-ccw {
+  inset: -15px;
+  border: 1px solid rgba(6, 182, 212, 0.18);
+  animation-name: guide-ring-ccw;
+  /* Slightly different speed for organic feel */
+  animation-duration: calc(var(--ring-dur, 14s) * 1.35);
+  animation-delay: -3s;
+}
+
+/* Floating wisp particles */
+.guide-wisp {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -3px 0 0 -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-name: guide-wisp;
+}
+.guide-wisp-1 {
+  background: rgba(108, 99, 255, 0.85);
+  filter: blur(1px);
+  animation-duration: 5.5s;
+}
+.guide-wisp-2 {
+  background: rgba(6, 182, 212, 0.75);
+  filter: blur(1px);
+  animation-duration: 7.5s;
+  animation-delay: -2.5s;
+}
+.guide-wisp-3 {
+  background: rgba(0, 217, 177, 0.7);
+  filter: blur(1px);
+  animation-duration: 10s;
+  animation-delay: -5s;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   RESPONSIVE LAYOUT UTILITIES
+   Applied via className in section components.
+   Breakpoint: ≤ 767px = mobile, ≥ 768px = desktop.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Layout grid classes (desktop defaults) ───────────────────────── */
+.layout-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+.layout-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+/* Generic content + narrower sidebar */
+.layout-sidebar {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: start;
+}
+/* Hero: full-width content + auto-width orb */
+.layout-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: center;
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+/* About: content + portrait */
+.layout-about-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: start;
+}
+
+/* ── Navbar mobile button (hidden on desktop) ─────────────────────── */
+.nav-hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--color-text-primary);
+  flex-shrink: 0;
+  transition:
+    border-color var(--duration-fast),
+    background var(--duration-fast);
+}
+.nav-hamburger:hover {
+  background: var(--color-bg-elevated);
+  border-color: var(--color-accent);
+}
+
+/* ── Mobile breakpoint ────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  /* All multi-column grids collapse to single column */
+  .layout-grid-2,
+  .layout-grid-3,
+  .layout-sidebar,
+  .layout-hero-grid,
+  .layout-about-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* Hero: hide the decorative orb (too wide to show side-by-side) */
+  .hero-guide-orb { display: none; }
+
+  /* About: un-stick the portrait so it doesn't overlap content */
+  .about-portrait-wrapper { position: static !important; }
+
+  /* Navbar: show hamburger, hide desktop nav + CTA */
+  .nav-hamburger { display: flex; }
+  .nav-desktop-links { display: none !important; }
+  .nav-desktop-cta  { display: none !important; }
+
+  /* Tighter section vertical padding on small screens */
+  .section-padding { padding-block: 3.5rem; }
+
+  /* GuideWidget: hug the edges more tightly */
+  .guide-widget-root {
+    bottom: 1rem !important;
+    right: 1rem !important;
+  }
+  .guide-mini-input-bar { width: 220px !important; }
+}
+
+
+
