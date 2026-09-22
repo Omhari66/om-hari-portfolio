@@ -60,17 +60,53 @@ export default function Navbar() {
           aria-label="Back to top"
           style={{
             pointerEvents: "all",
-            fontFamily: "var(--font-display)",
-            fontWeight: 700,
-            fontSize: "1.1rem",
-            letterSpacing: "0.06em",
             textDecoration: "none",
-            color: "white",
-            textTransform: "uppercase",
             flexShrink: 0,
+            display: "flex",
+            flexDirection: "column",
           }}
         >
-          YOUR<span style={{ color: "var(--color-accent)", margin: "0 3px" }}>·</span>NAME
+          <div style={{
+            fontFamily: "serif",
+            lineHeight: 0.85,
+            display: "flex",
+            flexDirection: "column",
+            position: "relative",
+          }}>
+            <span style={{
+              display: "block",
+              fontSize: "1.75rem",
+              fontWeight: 500,
+              color: "#E8E6E1",
+              letterSpacing: "-0.02em",
+            }}>
+              OM
+            </span>
+            <span style={{
+              display: "block",
+              fontSize: "1.75rem",
+              fontWeight: 500,
+              color: "transparent",
+              WebkitTextStroke: "1px #D5D0C5",
+              letterSpacing: "-0.02em",
+              marginTop: "-0.15em",
+            }}>
+              HARI
+            </span>
+          </div>
+          <div style={{
+            display: "flex",
+            gap: "0.6rem",
+            fontFamily: "serif",
+            fontSize: "0.55rem",
+            color: "#A39F96",
+            letterSpacing: "0.15em",
+            marginTop: "0.4rem",
+            paddingLeft: "0.05rem"
+          }}>
+            <span>PORTFOLIO</span>
+            <span>M.21</span>
+          </div>
         </a>
 
         {/* ── Floating pill nav ─────────────────────────────────────── */}

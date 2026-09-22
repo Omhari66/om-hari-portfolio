@@ -1,43 +1,45 @@
-// ============================================================
-// SKILLS CONTENT
-// Design Doc §4.5: grouped by USE, not alphabetized.
-// Tech-Doc §5.5: grouping logic lives HERE in data,
-// not computed at render time — keeps SkillGroup component clean.
-// TODO: Replace/reorder to match your actual skill set.
-// ============================================================
-
 import type { SkillGroup } from "@/types";
 
-// icon field: name of the skill for icon library lookup,
-// or a path like "/icons/react.svg" for local SVGs.
 const skills: SkillGroup[] = [
   {
-    category: "Build with",
+    category: "AI & ML",
     items: [
-      { name: "TypeScript",      icon: "typescript" },
-      { name: "React",           icon: "react" },
-      { name: "Next.js",         icon: "nextjs" },
+      { name: "PyTorch",         icon: "pytorch" },
+      { name: "YOLOv8",          icon: "computervision" },
+      { name: "RAG Pipelines",   icon: "rag" },
+      { name: "NLP",             icon: "nlp" },
+      { name: "Embeddings",      icon: "embeddings" },
+      { name: "Vector Search",   icon: "vectorsearch" },
+    ],
+  },
+  {
+    category: "PROGRAMMING",
+    items: [
+      { name: "Python",          icon: "python" },
+      { name: "C++",             icon: "cpp" },
+      { name: "Java",            icon: "java" },
+      { name: "C",               icon: "c" },
+      { name: "SQL",             icon: "sql" },
+    ],
+  },
+  {
+    category: "BACKEND",
+    items: [
+      { name: "FastAPI",         icon: "fastapi" },
       { name: "Node.js",         icon: "nodejs" },
+      { name: "Express.js",      icon: "express" },
       { name: "PostgreSQL",      icon: "postgresql" },
-      { name: "Supabase",        icon: "supabase" },
+      { name: "MongoDB",         icon: "mongodb" },
+      { name: "REST APIs",       icon: "api" },
     ],
   },
   {
-    category: "Design with",
+    category: "FRONTEND",
     items: [
-      { name: "Figma",           icon: "figma" },
-      { name: "Framer Motion",   icon: "framer" },
+      { name: "Next.js",         icon: "nextjs" },
+      { name: "React.js",        icon: "react" },
       { name: "Tailwind CSS",    icon: "tailwind" },
-      { name: "CSS / SVG",       icon: "css" },
-    ],
-  },
-  {
-    category: "Explore with",
-    items: [
-      { name: "Rust",            icon: "rust" },
-      { name: "WebAssembly",     icon: "webassembly" },
-      { name: "LLM APIs",        icon: "openai" },
-      { name: "Three.js",        icon: "threejs" },
+      { name: "HTML5/CSS3",      icon: "html" },
     ],
   },
 ];

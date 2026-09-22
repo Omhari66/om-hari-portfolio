@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { SkipLink } from "@/components/a11y/SkipLink";
+import { GhostCursor } from "@/components/effects/GhostCursor";
+import { PortfolioProvider } from "@/portfolio/state";
 import "./globals.css";
 
 // ============================================================
@@ -33,24 +35,23 @@ const jetbrainsMono = JetBrains_Mono({
 
 // ============================================================
 // METADATA
-// TODO: Replace "YOUR_NAME" with your real name before launch.
 // TODO: Replace "your.dev" with your real domain.
 // TODO: Add /public/og-image.png (1200×630) for social cards.
 // ============================================================
 export const metadata: Metadata = {
   title: {
-    default: "YOUR_NAME — Portfolio",
-    template: "%s | YOUR_NAME",
+    default: "Om Hari — Portfolio",
+    template: "%s | Om Hari",
   },
   description:
-    "Personal portfolio of YOUR_NAME — developer, builder, and creator. Explore my projects, experience, and skills through an interactive guided interface.",
+    "Personal portfolio of Om Hari — developer, builder, and creator. Explore my projects, experience, and skills through an interactive guided interface.",
   metadataBase: new URL("https://your.dev"),
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://your.dev",
-    siteName: "YOUR_NAME — Portfolio",
-    title: "YOUR_NAME — Portfolio",
+    siteName: "Om Hari — Portfolio",
+    title: "Om Hari — Portfolio",
     description:
       "An interactive portfolio with a guide character. Ask it anything about my work.",
     images: [
@@ -58,13 +59,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "YOUR_NAME — Portfolio",
+        alt: "Om Hari — Portfolio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "YOUR_NAME — Portfolio",
+    title: "Om Hari — Portfolio",
     description: "An interactive portfolio. Ask the guide anything.",
     // TODO: creator: "@yourhandle",
   },
@@ -115,7 +116,10 @@ export default function RootLayout({
           WCAG 2.4.1 — Bypass Blocks (Level A).
         */}
         <SkipLink />
-        {children}
+        <PortfolioProvider>
+          <GhostCursor color="#6C63FF" brightness={0.8} />
+          {children}
+        </PortfolioProvider>
       </body>
     </html>
   );

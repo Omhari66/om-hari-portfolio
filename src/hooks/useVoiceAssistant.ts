@@ -108,7 +108,7 @@ export function useVoiceAssistant() {
       const voice = pickBestVoice(voices);
       if (voice) utterance.voice = voice;
 
-      utterance.pitch  = 1.0;
+      utterance.pitch  = 0.8;
       utterance.rate   = 0.90;
       utterance.volume = 1.0;
 

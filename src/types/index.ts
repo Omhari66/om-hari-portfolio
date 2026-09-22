@@ -4,6 +4,25 @@
 // All content data files (/content/*.ts) must conform to these.
 // ============================================================
 
+export type EngineeringDecision = {
+  topic: string;
+  decision: string;
+  reason: string[];
+  alternatives?: string[];
+  implementationContext?: string;
+};
+
+export type ArchitectureNode = {
+  id: string; // Internal identifier
+  name: string; // Display name
+  icon?: string; // lucide-react icon name
+  role: string;
+  input?: string;
+  output?: string;
+  decisionTopic?: string; // Must exactly match a topic in the decisions array
+  evidenceIds?: string[]; // References evidence strings in the evidence array
+};
+
 export type Project = {
   id: string;
   title: string;
@@ -14,8 +33,20 @@ export type Project = {
   tags: string[];
   links: { label: string; url: string }[];
   media: { type: "image" | "video"; src: string }[];
-  accentColor: string;      // hex — per-project micro-identity (Design Doc 4.4)
+  accentColor: string;      // hex — per-project micro-identity
   signatureInteraction: "before-after" | "live-embed" | "terminal-reveal" | "none";
+  
+  // --- AGENT KNOWLEDGE LAYER ---
+  architecture: ArchitectureNode[];
+  features?: string[];
+  performance?: Record<string, string>;
+  decisions: EngineeringDecision[];
+  challenges: string[];
+  limitations: string[];
+  future: string[];
+  evidence: string[];
+  githubUrl?: string;
+  demoUrl?: string;
 };
 
 export type ExperienceEntry = {

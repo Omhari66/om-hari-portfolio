@@ -1,37 +1,25 @@
-// ============================================================
-// ABOUT CONTENT
-// TODO: Replace all placeholder content with your real bio
-//       before launch. Keep bio[] to 4-5 punchy lines max —
-//       Tech-Doc §5.5 (AboutBriefing) caps at 5 lines.
-// ============================================================
-
 import type { AboutData } from "@/types";
 
 const about: AboutData = {
   // Short one-liner that appears in hero area alongside the guide
-  tagline: "I build things that feel alive.",
+  tagline: "I build intelligent systems that work beyond the notebook.",
 
   // Each string = one line revealed in the AboutBriefing stagger animation.
   // Write in first person, punchy. Think "briefing", not "bio paragraph".
   bio: [
-    "Full-stack developer obsessed with the edge where design meets engineering.",
-    "I've shipped products used by tens of thousands — from zero to production.",
-    "TypeScript, React, and systems thinking are my daily tools.",
-    "I care about craft: the micro-interactions, the load time, the copy.",
-    "When I'm not coding, I'm usually breaking something on purpose to learn how it works.",
+    "I am an AI/ML Engineer and a student of Computer Science at Lovely Professional University.",
+    "My focus is on applied intelligence — LLM applications, RAG pipelines, computer vision, and NLP.",
+    "I don't just train models in notebooks. I build the full-stack infrastructure required to deploy them into production.",
+    "My goal is to understand how complex systems work deeply enough to build them from the ground up."
   ],
 
   // One specific, offbeat personal detail — Design Doc 4.2:
-  // "specificity reads as more genuine than polish"
-  // TODO: replace with something real and personal
   offbeatDetail:
-    "I once spent three days tuning a terminal prompt. No regrets.",
+    "I believe the best products hide their complexity. The AI should not replace the product; it should become the interface through which users understand it.",
 
-  // TODO: add your real portrait — place in /public/about/portrait.jpg
   photo: "/about/portrait.jpg",
 
-  // TODO: replace with your real location
-  location: "Bangalore, India",
+  location: "Punjab, India",
 };
 
 export default about;

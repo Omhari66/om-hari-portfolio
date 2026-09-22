@@ -10,14 +10,15 @@ import Skills      from "@/components/sections/Skills";
 import Contact     from "@/components/sections/Contact";
 import Footer      from "@/components/layout/Footer";
 import BootSequence from "@/components/signatures/BootSequence";
-import GuideWidget  from "@/components/guide/GuideWidget";
 import { GhostCursor } from "@/components/effects/GhostCursor";
+import { DynamicStage } from "@/components/stage/DynamicStage";
 
 
 
 export default function Home() {
   return (
     <>
+      <DynamicStage />
       {/* Boot sequence overlay — plays once per session, then self-dismisses */}
       <BootSequence />
 
@@ -35,9 +36,6 @@ export default function Home() {
       </main>
 
       <Footer />
-
-      {/* GuideWidget — fixed bottom-right, appears after BootSequence */}
-      <GuideWidget />
 
       {/* GhostCursor — fixed Three.js canvas overlay, pointer-events: none */}
       <GhostCursor
