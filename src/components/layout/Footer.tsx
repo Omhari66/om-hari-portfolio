@@ -1,5 +1,4 @@
 // Footer — minimal sign-off strip.
-// TODO: Replace YOUR_NAME with real name before launch.
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -29,7 +28,7 @@ export default function Footer() {
             letterSpacing: "0.05em",
           }}
         >
-          © {year} YOUR_NAME — Built with care, shipped with intent.
+          © {year} Om Hari — Built with care, shipped with intent.
         </p>
 
         <a

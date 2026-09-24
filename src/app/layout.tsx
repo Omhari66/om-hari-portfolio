@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, Inter, JetBrains_Mono, Geist } from "next/font/google";
 import { SkipLink } from "@/components/a11y/SkipLink";
 import { GhostCursor } from "@/components/effects/GhostCursor";
 import { PortfolioProvider } from "@/portfolio/state";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+
 
 // ============================================================
 // FONTS — next/font ensures zero layout shift and automatic
@@ -97,7 +101,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      className={cn(spaceGrotesk.variable, inter.variable, jetbrainsMono.variable, "font-sans", geist.variable)}
       suppressHydrationWarning
     >
       <head>
@@ -117,7 +121,20 @@ export default function RootLayout({
         */}
         <SkipLink />
         <PortfolioProvider>
-          <GhostCursor color="#6C63FF" brightness={0.8} />
+          <GhostCursor 
+            color="#B19EEF"
+            brightness={0.2}
+            edgeIntensity={0}
+            trailLength={4}
+            inertia={0.10}
+            grainIntensity={0.01}
+            bloomStrength={0}
+            bloomRadius={0}
+            bloomThreshold={0.5}
+            fadeDelayMs={50}
+            fadeDurationMs={400}
+            zIndex={9999}
+          />
           {children}
         </PortfolioProvider>
       </body>

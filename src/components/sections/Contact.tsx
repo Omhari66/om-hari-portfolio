@@ -4,7 +4,11 @@
 
 // GuideSignoff fires 'portfolio:signoff' on scroll-into-view.
 
+import React, { useActionState, useEffect, useRef } from "react";
 import { GuideSignoff } from "@/components/signatures/GuideSignoff";
+import { PerspectiveGrid } from "@/components/effects/PerspectiveGrid";
+import { MusicPlayer } from "@/components/effects/MusicPlayer";
+import { sendContactEmail } from "@/app/actions/contact";
 
 const SOCIAL_LINKS = [
   {
@@ -58,6 +62,15 @@ const SOCIAL_LINKS = [
 ] as const;
 
 export default function Contact() {
+  const [state, formAction, isPending] = useActionState(sendContactEmail, null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (state?.success && formRef.current) {
+      formRef.current.reset();
+    }
+  }, [state]);
+
   return (
     <section
       id="contact"
@@ -72,51 +85,95 @@ export default function Contact() {
     >
       {/* Accent glow bottom-right */}
       <div aria-hidden="true" style={{ position: "absolute", bottom: "-10%", right: "-5%", width: "400px", height: "400px", borderRadius: "50%", background: "radial-gradient(circle, rgba(108,99,255,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
+      
+      {/* 3D Perspective Grid Background */}
+      <PerspectiveGrid />
 
-      <div className="container-site">
+      <div className="container-site" style={{ position: "relative", zIndex: 10 }}>
         <GuideSignoff>
-          {/* Eyebrow */}
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-            <div style={{ width: "20px", height: "1px", background: "var(--color-accent)" }} />
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.7rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.2em", textTransform: "uppercase" }}>
-              05 — Hire Me
-            </span>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "2rem" }}>
+            <div>
+              {/* Eyebrow */}
+              <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
+                <div style={{ width: "20px", height: "1px", background: "var(--color-accent)" }} />
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.7rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.2em", textTransform: "uppercase" }}>
+                  05 — Hire Me
+                </span>
+              </div>
+
+              <h2
+                id="contact-heading"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 300,
+                  fontSize: "clamp(2.4rem, 5vw, 4.5rem)",
+                  letterSpacing: "0.06em",
+                  lineHeight: 1.1,
+                  color: "white",
+                  textTransform: "uppercase",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                Have an idea<br />
+                <span style={{ color: "var(--color-accent)" }}>worth building?</span>
+              </h2>
+
+              <p
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: "0.95rem",
+                  color: "rgba(255,255,255,0.4)",
+                  marginBottom: "clamp(2.5rem, 6vw, 4rem)",
+                  maxWidth: "540px",
+                  lineHeight: 1.6,
+                }}
+              >
+                I&apos;m interested in building intelligent products, solving difficult engineering problems, and working on ideas that deserve to exist.
+              </p>
+            </div>
+
+            {/* Right side: Opportunities + Music Player */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "2rem", alignItems: "center", minWidth: "280px" }}>
+              {/* Availability badge */}
+              <div
+                style={{
+                  padding: "1.25rem 1.5rem",
+                  border: "1px solid rgba(0,217,177,0.2)",
+                  background: "rgba(0,217,177,0.04)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.75rem",
+                  width: "100%",
+                }}
+              >
+                <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "var(--color-accent-teal)", boxShadow: "0 0 8px var(--color-accent-teal)", flexShrink: 0 }} />
+                <div>
+                  <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "0.9rem", color: "white", marginBottom: "0.15rem" }}>
+                    Open to opportunities
+                  </p>
+                  <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.06em" }}>
+                    Full-time · Freelance · Collaboration
+                  </p>
+                </div>
+              </div>
+
+              {/* Music Player */}
+              <MusicPlayer 
+                src="https://youtu.be/gbcexRAWJyY" 
+                coverArt="https://upload.wikimedia.org/wikipedia/en/1/1c/Rick_Astley_-_Whenever_You_Need_Somebody.png" 
+              />
+            </div>
           </div>
-
-          <h2
-            id="contact-heading"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 300,
-              fontSize: "clamp(2.4rem, 5vw, 4.5rem)",
-              letterSpacing: "0.06em",
-              lineHeight: 1.1,
-              color: "white",
-              textTransform: "uppercase",
-              marginBottom: "0.75rem",
-            }}
-          >
-            Have an idea<br />
-            <span style={{ color: "var(--color-accent)" }}>worth building?</span>
-          </h2>
-
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "0.95rem",
-              color: "rgba(255,255,255,0.4)",
-              marginBottom: "clamp(2.5rem, 6vw, 4rem)",
-              maxWidth: "540px",
-              lineHeight: 1.6,
-            }}
-          >
-            I&apos;m interested in building intelligent products, solving difficult engineering problems, and working on ideas that deserve to exist.
-          </p>
 
           {/* Two-column: form + links */}
           <div className="layout-sidebar">
             {/* Form */}
-            <form aria-label="Contact form" style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            <form 
+              ref={formRef}
+              action={formAction}
+              aria-label="Contact form" 
+              style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
+            >
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
                   <label htmlFor="contact-name" style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase" }}>
@@ -189,60 +246,52 @@ export default function Contact() {
                 />
               </div>
 
-              <button
-                suppressHydrationWarning
-                type="submit"
-                style={{
-                  alignSelf: "flex-start",
-                  padding: "0.85rem 2.5rem",
-                  background: "var(--color-accent)",
-                  border: "none",
-                  color: "white",
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.78rem",
-                  letterSpacing: "0.18em",
-                  textTransform: "uppercase",
-                  cursor: "pointer",
-                  transition: "opacity 0.2s",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.6rem",
-                }}
-                onMouseOver={(e) => (e.currentTarget.style.opacity = "0.85")}
-                onMouseOut={(e) => (e.currentTarget.style.opacity = "1")}
-              >
-                Send it
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M22 2 11 13M22 2 15 22l-4-9-9-4 20-7z" />
-                </svg>
-              </button>
+              <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                <button
+                  suppressHydrationWarning
+                  type="submit"
+                  disabled={isPending}
+                  style={{
+                    alignSelf: "flex-start",
+                    padding: "0.85rem 2.5rem",
+                    background: isPending ? "var(--color-border)" : "var(--color-accent)",
+                    border: "none",
+                    color: "white",
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.78rem",
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    cursor: isPending ? "not-allowed" : "pointer",
+                    transition: "opacity 0.2s",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.6rem",
+                  }}
+                  onMouseOver={(e) => { if (!isPending) e.currentTarget.style.opacity = "0.85"; }}
+                  onMouseOut={(e) => { if (!isPending) e.currentTarget.style.opacity = "1"; }}
+                >
+                  {isPending ? "Sending..." : "Send it"}
+                  {!isPending && (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M22 2 11 13M22 2 15 22l-4-9-9-4 20-7z" />
+                    </svg>
+                  )}
+                </button>
+                {state?.success && (
+                  <span style={{ color: "var(--color-accent-teal)", fontFamily: "var(--font-mono)", fontSize: "0.8rem" }}>
+                    Message sent successfully!
+                  </span>
+                )}
+                {state?.error && (
+                  <span style={{ color: "red", fontFamily: "var(--font-mono)", fontSize: "0.8rem" }}>
+                    {state.error}
+                  </span>
+                )}
+              </div>
             </form>
 
-            {/* Social links + availability */}
+            {/* Social links list */}
             <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-              {/* Availability badge */}
-              <div
-                style={{
-                  padding: "1.25rem 1.5rem",
-                  border: "1px solid rgba(0,217,177,0.2)",
-                  background: "rgba(0,217,177,0.04)",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.75rem",
-                }}
-              >
-                <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "var(--color-accent-teal)", boxShadow: "0 0 8px var(--color-accent-teal)", flexShrink: 0 }} />
-                <div>
-                  <p style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "0.9rem", color: "white", marginBottom: "0.15rem" }}>
-                    Open to opportunities
-                  </p>
-                  <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.06em" }}>
-                    Full-time · Freelance · Collaboration
-                  </p>
-                </div>
-              </div>
-
-              {/* Social links list */}
               <div style={{ display: "flex", flexDirection: "column", gap: "0.15rem" }}>
                 <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", color: "rgba(255,255,255,0.25)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "0.75rem" }}>
                   Find me elsewhere

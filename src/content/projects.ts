@@ -13,10 +13,10 @@ const projects: Project[] = [
       "Delivered four adaptive tutoring modes (Teacher, Revision, Exam, Normal) with automatic difficulty scaling and confidence-based weak-topic detection.",
     tags: ["Next.js", "FastAPI", "PostgreSQL", "Qdrant", "Redis", "Groq API", "Docker", "Celery"],
     links: [
-      { label: "GitHub", url: "https://github.com/omhari/adaptiq" },
+      { label: "GitHub", url: "https://github.com/Omhari66/adaptive-ai-tutor" },
     ],
     media: [
-      { type: "image", src: "/projects/adaptiq/screen-1.png" },
+      { type: "image", src: "/projects/adaptiq/screen-1.jpg" },
     ],
     accentColor: "#6C63FF",  // Electric violet
     signatureInteraction: "live-embed",
@@ -148,10 +148,10 @@ const projects: Project[] = [
       "Achieved a validation F1-score of 0.734 using class-imbalance correction and data augmentation. Deployed with a FastAPI backend, WebSocket event streaming, and tamper-evident evidence management.",
     tags: ["Python", "PyTorch", "YOLOv8", "OpenCV", "FastAPI", "PostgreSQL", "Docker", "GRU"],
     links: [
-      { label: "GitHub", url: "https://github.com/omhari/smartomnisentinel" },
+      { label: "GitHub", url: "https://github.com/Omhari66/smart-omnisentinel-final/tree/main/smart-omnisentinel" },
     ],
     media: [
-      { type: "video", src: "/projects/smartomnisentinel/demo.mp4" },
+      { type: "image", src: "/projects/smartomnisentinel/demo.jpg" },
     ],
     accentColor: "#00D9B1",  // Teal
     signatureInteraction: "terminal-reveal",
@@ -277,10 +277,11 @@ const projects: Project[] = [
       "Successfully launched a production-grade platform featuring one-click rollbacks, soft-delete recovery, Incremental Static Regeneration, and comprehensive Playwright E2E testing.",
     tags: ["Next.js 14", "TypeScript", "PostgreSQL", "Docker", "Playwright", "TipTap", "Cloudinary"],
     links: [
+      { label: "GitHub", url: "https://github.com/Omhari66/khabar-24-times" },
       { label: "Live Site", url: "https://khabar24times.com" },
     ],
     media: [
-      { type: "image", src: "/projects/khabar/screen-1.png" },
+      { type: "image", src: "/projects/khabar/screen-1.jpg" },
     ],
     accentColor: "#F59E0B",  // Amber
     signatureInteraction: "before-after",
@@ -376,9 +377,11 @@ const projects: Project[] = [
     result:
       "Developed a robust pipeline with 275 passing tests covering multi-image OCR fusion and deterministic legal rule engines.",
     tags: ["Python", "FastAPI", "Gemini VLM", "Tesseract", "EasyOCR", "React Native", "Next.js"],
-    links: [],
+    links: [
+      { label: "GitHub", url: "https://github.com/Omhari66/PS26034" }
+    ],
     media: [
-      { type: "image", src: "/projects/sih/screen-1.png" },
+      { type: "image", src: "/projects/sih/screen-1.jpg" },
     ],
     accentColor: "#3B82F6",  // Blue
     signatureInteraction: "live-embed",

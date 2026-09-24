@@ -6,6 +6,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
+import { TextPressure } from "@/components/effects/TextPressure";
 
 const NAV_LINKS = [
   { href: "#hero",       label: "Home"       },
@@ -67,32 +69,31 @@ export default function Navbar() {
           }}
         >
           <div style={{
-            fontFamily: "serif",
             lineHeight: 0.85,
             display: "flex",
             flexDirection: "column",
             position: "relative",
           }}>
-            <span style={{
-              display: "block",
-              fontSize: "1.75rem",
-              fontWeight: 500,
-              color: "#E8E6E1",
-              letterSpacing: "-0.02em",
-            }}>
-              OM
-            </span>
-            <span style={{
-              display: "block",
-              fontSize: "1.75rem",
-              fontWeight: 500,
-              color: "transparent",
-              WebkitTextStroke: "1px #D5D0C5",
-              letterSpacing: "-0.02em",
-              marginTop: "-0.15em",
-            }}>
-              HARI
-            </span>
+            <TextPressure 
+              text="OM" 
+              baseWeight={400} 
+              maxWeight={900} 
+              baseWidth={50} 
+              maxWidth={110} 
+              influenceRadius={120}
+              className="text-[#E8E6E1]"
+              style={{ fontSize: "1.75rem", letterSpacing: "-0.02em" }}
+            />
+            <TextPressure 
+              text="HARI" 
+              stroke={true}
+              baseWeight={400} 
+              maxWeight={900} 
+              baseWidth={50} 
+              maxWidth={110} 
+              influenceRadius={120}
+              style={{ fontSize: "1.75rem", letterSpacing: "-0.02em", marginTop: "-0.15em" }}
+            />
           </div>
           <div style={{
             display: "flex",
@@ -169,33 +170,52 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* CONTACT pill ─────────────────────────────────────────────── */}
-        <a
-          href="#contact"
-          className="nav-desktop-cta"
-          style={{
-            pointerEvents: "all",
-            fontFamily: "var(--font-body)",
-            fontSize: "0.82rem",
-            color: "white",
-            textDecoration: "none",
-            padding: "0.5rem 1.4rem",
-            border: "1px solid rgba(255,255,255,0.28)",
-            borderRadius: "9999px",
-            letterSpacing: "0.06em",
-            transition: "all 0.2s",
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.background = "white";
-            e.currentTarget.style.color = "black";
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = "white";
-          }}
-        >
-          CONTACT
-        </a>
+        {/* RESUME & CONTACT pills ───────────────────────────────────── */}
+        <div className="nav-desktop-cta" style={{ pointerEvents: "all", display: "flex", gap: "1.5rem", alignItems: "center" }}>
+          <a
+            href="/about/OmHari_CV_final.pdf"
+            download="OmHari_CV_final.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "0.82rem",
+              color: "rgba(255,255,255,0.6)",
+              textDecoration: "none",
+              letterSpacing: "0.06em",
+              transition: "color 0.2s",
+            }}
+            onMouseOver={(e) => e.currentTarget.style.color = "white"}
+            onMouseOut={(e) => e.currentTarget.style.color = "rgba(255,255,255,0.6)"}
+          >
+            RESUME
+          </a>
+
+          <a
+            href="#contact"
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "0.82rem",
+              color: "white",
+              textDecoration: "none",
+              padding: "0.5rem 1.4rem",
+              border: "1px solid rgba(255,255,255,0.28)",
+              borderRadius: "9999px",
+              letterSpacing: "0.06em",
+              transition: "all 0.2s",
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = "white";
+              e.currentTarget.style.color = "black";
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.color = "white";
+            }}
+          >
+            CONTACT
+          </a>
+        </div>
 
         {/* Hamburger — mobile only */}
         <button
@@ -252,7 +272,7 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05, duration: 0.22 }}
                   >
-                    <a
+                    <Link
                       href={href}
                       onClick={close}
                       style={{
@@ -267,11 +287,21 @@ export default function Navbar() {
                       }}
                     >
                       {label}
-                    </a>
+                    </Link>
                   </motion.li>
                 ))}
               </ul>
-              <div style={{ marginTop: "1.25rem" }}>
+              <div style={{ marginTop: "1.25rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                <a
+                  href="/about/OmHari_CV_final.pdf" download="OmHari_CV_final.pdf" target="_blank" rel="noopener noreferrer" onClick={close}
+                  style={{
+                    display: "block", textAlign: "center", padding: "0.85rem",
+                    color: "rgba(255,255,255,0.6)", textDecoration: "none",
+                    fontFamily: "var(--font-mono)", fontSize: "0.8rem", letterSpacing: "0.1em",
+                  }}
+                >
+                  RESUME
+                </a>
                 <a
                   href="#contact" onClick={close}
                   style={{

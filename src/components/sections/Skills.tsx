@@ -5,8 +5,28 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import skills from "@/content/skills";
+import { FuzzyText } from "@/components/effects/FuzzyText";
+import ElectricBorder from "@/components/effects/ElectricBorder";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+const categoryColors = [
+  "#00D9B1", // Teal
+  "#a855f7", // Electric Purple
+  "#ff0055", // Neon Pink
+  "#7df9ff", // Cyan
+  "#ccff00", // Volt Green
+  "#3b82f6", // Electric Blue
+];
+
+const getRgba = (hex: string, alpha: number) => {
+  let h = hex.replace('#', '');
+  if (h.length === 3) h = h.split('').map(c => c + c).join('');
+  const r = parseInt(h.substring(0, 2), 16);
+  const g = parseInt(h.substring(2, 4), 16);
+  const b = parseInt(h.substring(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
 
 export default function Skills() {
   const containerRef = useRef<HTMLElement>(null);
@@ -76,40 +96,55 @@ export default function Skills() {
         </span>
       </div>
 
-      <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 4rem)", fontWeight: 300, color: "white", marginBottom: "4rem" }}>
-        Technical Capabilities
-      </h2>
+      <div style={{ marginBottom: "4rem" }}>
+        <FuzzyText 
+          fontSize="clamp(2rem, 4vw, 4rem)" 
+          fontWeight={300} 
+          fontFamily="var(--font-display)" 
+          color="white"
+        >
+          Technical Capabilities
+        </FuzzyText>
+      </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem" }}>
-        {skills.map((group) => {
+        {skills.map((group, index) => {
           const isActive = activeCategory === group.category;
           const safeCategory = group.category.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+          const activeColor = categoryColors[index % categoryColors.length];
 
           return (
-            <div 
-              key={group.category}
-              className="skill-category-node"
-              style={{
-                position: "relative",
-                border: `1px solid ${isActive ? "var(--color-accent-teal)" : "rgba(255,255,255,0.1)"}`,
-                backgroundColor: isActive ? "rgba(0, 217, 177, 0.05)" : "rgba(255,255,255,0.02)",
-                padding: "2rem",
-                cursor: "pointer",
-                transition: "all 0.4s ease",
-              }}
-              onClick={() => handleCategoryClick(group.category)}
-              onMouseOver={(e) => {
-                if (!isActive) e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.04)";
-              }}
-              onMouseOut={(e) => {
-                if (!isActive) e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.02)";
-              }}
-            >
+            <div key={group.category} className="skill-category-node" style={{ height: '100%' }}>
+              <ElectricBorder
+                color={isActive ? activeColor : "#1a1a1a"}
+                speed={isActive ? 1.5 : 0.2}
+                chaos={isActive ? 0.25 : 0.05}
+                borderRadius={16}
+                style={{ height: '100%' }}
+              >
+                <div 
+                  style={{
+                    position: "relative",
+                    backgroundColor: isActive ? getRgba(activeColor, 0.05) : "rgba(255,255,255,0.02)",
+                    padding: "2rem",
+                    cursor: "pointer",
+                    transition: "all 0.4s ease",
+                    height: '100%',
+                    borderRadius: 16
+                  }}
+                  onClick={() => handleCategoryClick(group.category)}
+                  onMouseOver={(e) => {
+                    if (!isActive) e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.04)";
+                  }}
+                  onMouseOut={(e) => {
+                    if (!isActive) e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.02)";
+                  }}
+                >
               <h3 style={{ 
                 fontFamily: "var(--font-mono)", 
                 fontSize: "1.2rem", 
                 letterSpacing: "0.2em", 
-                color: isActive ? "var(--color-accent-teal)" : "white", 
+                color: isActive ? activeColor : "white", 
                 margin: "0 0 1rem 0",
                 display: "flex",
                 justifyContent: "space-between",
@@ -152,6 +187,8 @@ export default function Skills() {
                   </div>
                 ))}
               </div>
+                </div>
+              </ElectricBorder>
             </div>
           );
         })}

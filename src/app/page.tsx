@@ -12,8 +12,7 @@ import Footer      from "@/components/layout/Footer";
 import BootSequence from "@/components/signatures/BootSequence";
 import { GhostCursor } from "@/components/effects/GhostCursor";
 import { DynamicStage } from "@/components/stage/DynamicStage";
-
-
+import { PerspectiveGrid } from "@/components/effects/PerspectiveGrid";
 
 export default function Home() {
   return (
@@ -26,7 +25,6 @@ export default function Home() {
 
       {/* tabIndex={-1} lets the skip link href="#main-content" shift focus here */}
       <main id="main-content" tabIndex={-1} aria-label="Main content">
-
         <Hero />
         <About />
         <Experience />
@@ -36,19 +34,6 @@ export default function Home() {
       </main>
 
       <Footer />
-
-      {/* GhostCursor — fixed Three.js canvas overlay, pointer-events: none */}
-      <GhostCursor
-        color="#6C63FF"
-        brightness={0.9}
-        trailLength={22}
-        inertia={0.18}
-        bloomStrength={0.025}
-        mixBlendMode="screen"
-        zIndex={9999}
-      />
-
-
     </>
   );
 }

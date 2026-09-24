@@ -6,6 +6,8 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import about from "@/content/about";
 import Image from "next/image";
+import { FuzzyText } from "@/components/effects/FuzzyText";
+import { HighlightText } from "@/components/effects/HighlightText";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -225,14 +227,24 @@ export default function About() {
         </button>
 
         <div className="detail-content" style={{ marginTop: "2rem", marginBottom: "3rem" }}>
-          <h3 style={{ fontFamily: "var(--font-display)", fontSize: "2rem", fontWeight: 300, color: "white", marginBottom: "2rem" }}>
-            The Full Story
-          </h3>
+          <div style={{ marginBottom: "2rem" }}>
+            <FuzzyText 
+              fontSize="2rem" 
+              fontWeight={300} 
+              fontFamily="var(--font-display)" 
+              color="white"
+            >
+              The Full Story
+            </FuzzyText>
+          </div>
           
-          {/* Map through the bio array from content/about.ts */}
           {about.bio.map((paragraph, index) => (
             <p key={index} style={{ fontFamily: "var(--font-body)", fontSize: "0.95rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.8, marginBottom: "1.5rem" }}>
-              {paragraph}
+              <HighlightText 
+                text={paragraph} 
+                keywords={["applied intelligence", "deploy them into production", "from the ground up", "LLM applications", "RAG pipelines"]} 
+                color="var(--color-accent-teal)" 
+              />
             </p>
           ))}
         </div>
@@ -242,7 +254,11 @@ export default function About() {
             Offbeat Detail
           </span>
           <p style={{ fontFamily: "var(--font-body)", fontSize: "0.9rem", color: "rgba(255,255,255,0.8)", lineHeight: 1.6, margin: 0 }}>
-            {about.offbeatDetail}
+            <HighlightText 
+              text={about.offbeatDetail} 
+              keywords={["hide their complexity", "interface through which users understand it"]} 
+              color="var(--color-accent)" 
+            />
           </p>
         </div>
       </div>
