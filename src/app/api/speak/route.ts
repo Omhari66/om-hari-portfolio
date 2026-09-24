@@ -1,4 +1,4 @@
-// /api/speak — Proxies text to Deepgram Aura TTS and streams back audio.
+// /api/speak — Proxies text to ElevenLabs TTS and streams back audio.
 // API key stays server-side. Returns raw MP3 audio.
 
 export async function POST(req: Request) {
@@ -9,31 +9,38 @@ export async function POST(req: Request) {
       return new Response("Text is required", { status: 400 });
     }
 
-    const apiKey = process.env.DEEPGRAM_API_KEY;
-    // Deepgram Aura Voices: aura-asteria-en (female, soothing), aura-orion-en (male, soothing)
-    const voiceModel = process.env.DEEPGRAM_VOICE_MODEL ?? "aura-asteria-en"; 
+    const apiKey  = process.env.ELEVENLABS_API_KEY;
+    const voiceId = process.env.ELEVENLABS_VOICE_ID ?? "pNInz6obpgDQGcFmaJgB";
 
-    if (!apiKey) {
-      return new Response("Deepgram API key not configured", { status: 503 });
+    if (!apiKey || apiKey === "your_elevenlabs_api_key_here") {
+      return new Response("ElevenLabs API key not configured", { status: 503 });
     }
 
     const response = await fetch(
-      `https://api.deepgram.com/v1/speak?model=${voiceModel}`,
+      `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}/stream`,
       {
         method: "POST",
         headers: {
-          Authorization: `Token ${apiKey}`,
+          "xi-api-key": apiKey,
           "Content-Type": "application/json",
+          Accept: "audio/mpeg",
         },
         body: JSON.stringify({
           text: text.trim(),
+          model_id: "eleven_turbo_v2",   // fastest + cheapest model
+          voice_settings: {
+            stability: 0.5,             // 0=expressive, 1=stable
+            similarity_boost: 0.75,     // how close to original voice
+            style: 0.0,                 // keep 0 for speed
+            use_speaker_boost: true,
+          },
         }),
       }
     );
 
     if (!response.ok) {
       const err = await response.text();
-      console.error("Deepgram error:", err);
+      console.error("ElevenLabs error:", err);
       return new Response("TTS generation failed", { status: 502 });
     }
 

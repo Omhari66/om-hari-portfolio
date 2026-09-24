@@ -51,8 +51,8 @@ export function useVoiceAssistant() {
     load();
   }, []);
 
-  // ── Premium Voice path ──────────────────────────────────────────────
-  const speakPremiumVoice = useCallback(
+  // ── ElevenLabs path ──────────────────────────────────────────────
+  const speakElevenLabs = useCallback(
     async (text: string, onEnd?: () => void): Promise<boolean> => {
       try {
         const res = await fetch("/api/speak", {
@@ -125,17 +125,17 @@ export function useVoiceAssistant() {
     [voices]
   );
 
-  // ── Public speak() — tries Premium Voice first, falls back ─────────
+  // ── Public speak() — tries ElevenLabs first, falls back ─────────
   const speak = useCallback(
     async (text: string, onEnd?: () => void) => {
       stoppedRef.current = false;
-      const usedPremium = await speakPremiumVoice(text, onEnd);
-      if (!usedPremium && !stoppedRef.current) {
-        // Premium API not configured or failed — use browser TTS
+      const usedElevenLabs = await speakElevenLabs(text, onEnd);
+      if (!usedElevenLabs && !stoppedRef.current) {
+        // ElevenLabs not configured or failed — use browser TTS
         speakWebSpeech(text, onEnd);
       }
     },
-    [speakPremiumVoice, speakWebSpeech]
+    [speakElevenLabs, speakWebSpeech]
   );
 
   // ── Public stop() ────────────────────────────────────────────────
