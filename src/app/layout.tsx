@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono, Geist } from "next/font/google";
 import { SkipLink } from "@/components/a11y/SkipLink";
 import { GhostCursor } from "@/components/effects/GhostCursor";
@@ -42,6 +42,13 @@ const jetbrainsMono = JetBrains_Mono({
 // TODO: Replace "your.dev" with your real domain.
 // TODO: Add /public/og-image.png (1200×630) for social cards.
 // ============================================================
+export const viewport: Viewport = {
+  themeColor: "#000000",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export const metadata: Metadata = {
   title: {
     default: "Om Hari — Portfolio",

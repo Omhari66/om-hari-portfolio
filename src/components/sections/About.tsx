@@ -107,7 +107,7 @@ export default function About() {
         THE BUILDER BEHIND THE CODE
       </div>
 
-      <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "1200px", margin: "0 auto", padding: "0 2rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}>
+      <div className="about-section-container">
         
         {/* Left: Interaction Prompt */}
         <div>
@@ -152,10 +152,10 @@ export default function About() {
             position: "relative",
             aspectRatio: "3/4",
             width: "100%",
-            maxWidth: "450px",
+            maxWidth: "420px",
             cursor: "pointer",
             overflow: "hidden",
-            marginLeft: "auto",
+            margin: "0 auto",
           }}
         >
           <Image
@@ -179,10 +179,10 @@ export default function About() {
           />
           <div style={{ position: "absolute", inset: 0, border: "1px solid rgba(255,255,255,0.1)", pointerEvents: "none" }} />
           
-          {/* Hover overlay text */}
-          <div style={{ position: "absolute", bottom: "2rem", right: "-2rem", transform: "rotate(-90deg)", transformOrigin: "bottom right" }}>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.7rem", color: "var(--color-accent-teal)", letterSpacing: "0.2em", textTransform: "uppercase", background: "rgba(0,0,0,0.5)", padding: "0.5rem 1rem" }}>
-              Expand Details
+          {/* Tap / Hover overlay indicator */}
+          <div style={{ position: "absolute", bottom: "1.25rem", right: "1.25rem", zIndex: 2 }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.68rem", color: "var(--color-accent-teal)", letterSpacing: "0.15em", textTransform: "uppercase", background: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)", padding: "0.45rem 0.9rem", borderRadius: "4px", border: "1px solid rgba(0,217,177,0.3)" }}>
+              Tap To Expand
             </span>
           </div>
         </div>
@@ -192,17 +192,8 @@ export default function About() {
       {/* ── DETAILED VIEW: The Sliding Drawer ── */}
       <div
         ref={detailPanelRef}
+        className="about-detail-drawer"
         style={{
-          position: "fixed",
-          top: 0,
-          right: 0,
-          width: "min(100%, 600px)",
-          height: "100vh",
-          backgroundColor: "#0a0a0a",
-          borderLeft: "1px solid rgba(255,255,255,0.1)",
-          zIndex: 100,
-          padding: "4rem",
-          overflowY: "auto",
           transform: "translateX(100%)", // Initial state
         }}
       >

@@ -82,7 +82,7 @@ export default function Skills() {
         position: "relative",
         minHeight: "100vh",
         backgroundColor: "#000",
-        padding: "8rem clamp(2rem, 6vw, 5rem)",
+        padding: "clamp(5rem, 10vw, 8rem) clamp(1rem, 5vw, 5rem)",
         borderTop: "1px solid rgba(255,255,255,0.05)",
         display: "flex",
         flexDirection: "column",
@@ -96,7 +96,7 @@ export default function Skills() {
         </span>
       </div>
 
-      <div style={{ marginBottom: "4rem" }}>
+      <div style={{ marginBottom: "clamp(2.5rem, 6vw, 4rem)" }}>
         <FuzzyText 
           fontSize="clamp(2rem, 4vw, 4rem)" 
           fontWeight={300} 
@@ -107,7 +107,7 @@ export default function Skills() {
         </FuzzyText>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem" }}>
+      <div className="skills-grid">
         {skills.map((group, index) => {
           const isActive = activeCategory === group.category;
           const safeCategory = group.category.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
@@ -126,7 +126,7 @@ export default function Skills() {
                   style={{
                     position: "relative",
                     backgroundColor: isActive ? getRgba(activeColor, 0.05) : "rgba(255,255,255,0.02)",
-                    padding: "2rem",
+                    padding: "clamp(1.25rem, 4vw, 2rem)",
                     cursor: "pointer",
                     transition: "all 0.4s ease",
                     height: '100%',

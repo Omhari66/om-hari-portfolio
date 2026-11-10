@@ -72,23 +72,23 @@ export function ArchitectureView({ data }: { data: ArchitectureNode[] }) {
       
       {/* Header */}
       <div className="flex-none">
-        <h1 className="font-display text-4xl md:text-5xl font-light tracking-wide text-white uppercase">
+        <h1 className="font-display text-2xl sm:text-4xl md:text-5xl font-light tracking-wide text-white uppercase">
           SYSTEM ARCHITECTURE
         </h1>
-        <p className="font-mono text-xs tracking-widest text-white/40 mt-3 uppercase">
+        <p className="font-mono text-xs tracking-widest text-white/40 mt-2 uppercase">
           Interactive Data Pipeline & Component Analysis
         </p>
       </div>
 
       {/* Main Layout: Pipeline (Top/Left) + Details (Right/Bottom) */}
-      <div className="flex flex-col lg:flex-row gap-8 flex-1 min-h-0 overflow-hidden">
+      <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 flex-1 min-h-0">
         
         {/* Horizontal Pipeline */}
         <div 
           ref={scrollRef}
-          className="flex-1 overflow-x-auto overflow-y-hidden custom-scrollbar flex items-stretch py-4"
+          className="flex-1 overflow-x-auto custom-scrollbar flex items-stretch py-2 sm:py-4"
         >
-          <div className="flex items-stretch px-2 h-full min-h-[400px]">
+          <div className="flex items-stretch px-1 sm:px-2 h-full min-h-[360px] sm:min-h-[400px]">
             {data.map((node, index) => {
               const isActive = node.id === selectedId;
               const formatted = formatName(node.name);
@@ -98,7 +98,7 @@ export function ArchitectureView({ data }: { data: ArchitectureNode[] }) {
                   {/* Card */}
                   <div 
                     onClick={() => setSelectedId(node.id)}
-                    className={`arch-node shrink-0 w-[320px] h-auto min-h-[460px] flex flex-col justify-between p-8 rounded-xl border transition-all duration-300 cursor-pointer overflow-hidden ${
+                    className={`arch-node shrink-0 w-[260px] sm:w-[320px] h-auto min-h-[380px] sm:min-h-[460px] flex flex-col justify-between p-5 sm:p-8 rounded-xl border transition-all duration-300 cursor-pointer overflow-hidden ${
                       isActive 
                         ? "border-[var(--color-accent)] bg-white/[0.05] shadow-[0_0_20px_rgba(108,99,255,0.15)] scale-[1.02]" 
                         : "border-white/10 hover:border-white/30 bg-black/40 hover:bg-white/[0.02]"

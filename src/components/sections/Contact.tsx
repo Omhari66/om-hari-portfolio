@@ -133,7 +133,7 @@ export default function Contact() {
             </div>
 
             {/* Right side: Opportunities + Music Player */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "2rem", alignItems: "center", minWidth: "280px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "2rem", alignItems: "center", width: "100%", maxWidth: "340px" }}>
               {/* Availability badge */}
               <div
                 style={{
@@ -174,7 +174,7 @@ export default function Contact() {
               aria-label="Contact form" 
               style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
             >
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+              <div className="contact-inputs-row">
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
                   <label htmlFor="contact-name" style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase" }}>
                     Name

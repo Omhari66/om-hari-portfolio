@@ -41,13 +41,13 @@ export function DecisionView({ data }: { data: EngineeringDecision }) {
   }, [state.activeProject]);
 
   return (
-    <div className="w-full h-full mx-auto flex flex-col py-4 px-4 lg:px-8 overflow-hidden">
+    <div className="w-full h-full mx-auto flex flex-col py-2 sm:py-4 px-1 sm:px-4 lg:px-8">
       
       {/* Header */}
-      <div className="mb-8 flex-none animate-in fade-in slide-in-from-top-4 duration-500">
+      <div className="mb-6 sm:mb-8 flex-none animate-in fade-in slide-in-from-top-4 duration-500">
         <button 
           onClick={handleBack}
-          className="flex items-center gap-2 text-white/50 hover:text-[var(--color-accent)] transition-colors font-mono text-[10px] tracking-widest uppercase group mb-6"
+          className="flex items-center gap-2 text-white/50 hover:text-[var(--color-accent)] transition-colors font-mono text-[10px] tracking-widest uppercase group mb-4 sm:mb-6"
         >
           <LucideIcons.ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
           <span>Back to Architecture</span>
@@ -56,22 +56,22 @@ export function DecisionView({ data }: { data: EngineeringDecision }) {
         <div className="font-mono text-[10px] tracking-widest text-[var(--color-accent)] mb-2 uppercase flex items-center gap-2">
           TECHNICAL DECISION
         </div>
-        <h1 className="font-display text-4xl md:text-5xl font-light tracking-wide text-white leading-tight mb-3 break-words">
+        <h1 className="font-display text-2xl sm:text-4xl md:text-5xl font-light tracking-wide text-white leading-tight mb-2 sm:mb-3 break-words">
           {data.topic}
         </h1>
-        <p className="font-body text-lg text-white/70 max-w-3xl leading-relaxed break-words">
+        <p className="font-body text-sm sm:text-lg text-white/70 max-w-3xl leading-relaxed break-words">
           {data.decision}
         </p>
       </div>
 
       {/* Two-Column Main Area */}
-      <div className="flex flex-col lg:flex-row gap-8 flex-1 min-h-0 overflow-y-auto custom-scrollbar pb-12 pr-2 animate-in fade-in duration-700 delay-150 fill-mode-both">
+      <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 flex-1 min-h-0 overflow-y-auto custom-scrollbar pb-8 sm:pb-12 pr-1 sm:pr-2 animate-in fade-in duration-700 delay-150 fill-mode-both">
         
         {/* LEFT COLUMN: Main Content */}
         <div className="flex-1 flex flex-col gap-4 max-w-3xl">
           
           {/* Why I chose it */}
-          <div className="p-6 md:p-8 rounded-2xl border border-white/10 bg-black/40 hover:bg-white/[0.02] transition-colors flex gap-6">
+          <div className="p-4 sm:p-6 md:p-8 rounded-2xl border border-white/10 bg-black/40 hover:bg-white/[0.02] transition-colors flex flex-col sm:flex-row gap-4 sm:gap-6">
             <div className="shrink-0 mt-1">
               <div className="w-10 h-10 rounded-full bg-[var(--color-accent)]/10 border border-[var(--color-accent)]/30 flex items-center justify-center text-[var(--color-accent)] shadow-[0_0_15px_rgba(108,99,255,0.15)]">
                 <LucideIcons.Target size={20} />

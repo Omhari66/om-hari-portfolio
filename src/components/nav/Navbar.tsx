@@ -51,7 +51,7 @@ export default function Navbar() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: "0 2rem",
+          padding: "0 clamp(1rem, 4vw, 2rem)",
           background: "rgba(0,0,0,0.0)",   /* transparent — pill carries the bg */
           pointerEvents: "none",           /* let clicks through the empty bar */
         }}
@@ -263,7 +263,7 @@ export default function Navbar() {
               borderBottom: "1px solid rgba(255,255,255,0.06)",
             }}
           >
-            <div style={{ padding: "1.25rem 2rem 1.75rem" }}>
+            <div style={{ padding: "1.25rem clamp(1rem, 5vw, 2rem) 1.75rem" }}>
               <ul role="list" style={{ listStyle: "none", margin: 0, padding: 0 }}>
                 {([...NAV_LINKS, { href: "#contact", label: "Contact" }] as const).map(({ href, label }, i) => (
                   <motion.li
@@ -272,7 +272,7 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05, duration: 0.22 }}
                   >
-                    <Link
+                    <a
                       href={href}
                       onClick={close}
                       style={{
@@ -287,7 +287,7 @@ export default function Navbar() {
                       }}
                     >
                       {label}
-                    </Link>
+                    </a>
                   </motion.li>
                 ))}
               </ul>

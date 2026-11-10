@@ -225,7 +225,9 @@ export function AmbientVoiceOverlay({ isActive, onClose }: AmbientVoiceOverlayPr
         flexDirection: "column",
         justifyContent: "flex-end",
         alignItems: "center",
-        paddingBottom: "18vh",
+        paddingBottom: "clamp(5rem, 14vh, 18vh)",
+        paddingLeft: "1rem",
+        paddingRight: "1rem",
         background: "radial-gradient(circle at bottom, rgba(124, 58, 237, 0.05) 0%, rgba(0,0,0,0) 70%)",
       }}
     >
@@ -235,7 +237,7 @@ export function AmbientVoiceOverlay({ isActive, onClose }: AmbientVoiceOverlayPr
         suppressHydrationWarning
         style={{
           position: "absolute",
-          bottom: "3rem",
+          bottom: "clamp(1.25rem, 4vh, 3rem)",
           left: "50%",
           transform: "translateX(-50%)",
           background: "rgba(255,255,255,0.05)",
@@ -259,7 +261,7 @@ export function AmbientVoiceOverlay({ isActive, onClose }: AmbientVoiceOverlayPr
       {/* ── Content panel ── */}
       <div
         ref={panelRef}
-        style={{ width: "min(90%, 600px)", textAlign: "center", fontFamily: "var(--font-display)" }}
+        style={{ width: "min(92%, 600px)", textAlign: "center", fontFamily: "var(--font-display)" }}
       >
         {isListening && (
           <p style={{
@@ -277,7 +279,7 @@ export function AmbientVoiceOverlay({ isActive, onClose }: AmbientVoiceOverlayPr
         {transcript && (
           <p style={{
             color: "rgba(255,255,255,0.8)",
-            fontSize: "1.5rem",
+            fontSize: "clamp(1.1rem, 3.5vw, 1.5rem)",
             fontWeight: 300,
             lineHeight: 1.5,
             fontStyle: "italic",

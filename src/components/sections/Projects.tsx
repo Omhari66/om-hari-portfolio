@@ -144,7 +144,7 @@ export default function Projects() {
                 className="project-card-wrapper"
                 style={{
                   position: "sticky",
-                  top: `calc(15vh + ${index * 30}px)`, // Stacks them with a 30px offset like a deck
+                  top: `calc(10vh + ${index * 24}px)`, // Responsive deck stack
                   height: "100vh", // The wrapper takes up 100vh of scroll space
                   display: "flex",
                   alignItems: "flex-start",
@@ -153,22 +153,7 @@ export default function Projects() {
               >
                 <div
                   onClick={() => openProject(project)}
-                  className="project-card-inner"
-                  style={{
-                    height: "70vh", // Fixed height for the card
-                    width: "100%",
-                    maxWidth: "1200px",
-                    margin: "0 auto",
-                    backgroundColor: "#111",
-                    border: "1px solid rgba(255,255,255,0.05)",
-                    borderRadius: "24px",
-                    display: "grid",
-                    gridTemplateColumns: "1.2fr 1fr", // Left image, right content
-                    cursor: "pointer",
-                    overflow: "hidden",
-                    boxShadow: "0 -20px 40px rgba(0,0,0,0.8)",
-                    transformOrigin: "top center", // Scales from the top edge where it's stuck
-                  } as React.CSSProperties}
+                  className="project-card-inner project-card-inner-box"
                   onMouseOver={(e) => {
                     e.currentTarget.style.borderColor = project.accentColor;
                     const bgLayer = e.currentTarget.querySelector('.bg-layer') as HTMLElement;
@@ -193,19 +178,19 @@ export default function Projects() {
                     }} 
                   />
 
-                {/* Left Side: Media */}
-                <div style={{ position: "relative", zIndex: 1, backgroundColor: "#000", borderRight: "1px solid rgba(255,255,255,0.05)", overflow: "hidden" }}>
+                {/* Left/Top Side: Media */}
+                <div className="project-card-media-col">
                   {mediaItem && mediaItem.type === "image" ? (
                     <img 
                       src={mediaItem.src} 
                       alt={project.title}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.8 }}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.85 }}
                     />
                   ) : mediaItem && mediaItem.type === "video" ? (
                     <video 
                       src={mediaItem.src} 
                       autoPlay loop muted playsInline
-                      style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.8 }}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.85 }}
                     />
                   ) : (
                     <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", opacity: 0.2 }}>
@@ -214,39 +199,39 @@ export default function Projects() {
                   )}
                 </div>
 
-                {/* Right Side: Content */}
-                <div style={{ position: "relative", zIndex: 1, padding: "4rem 3rem", display: "flex", flexDirection: "column" }}>
-                  <div style={{ display: "flex", gap: "1rem", alignItems: "center", marginBottom: "2rem" }}>
-                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.7rem", color: project.accentColor, letterSpacing: "0.15em", textTransform: "uppercase", background: "rgba(255,255,255,0.03)", padding: "0.3rem 0.8rem", borderRadius: "100px", border: "1px solid rgba(255,255,255,0.05)" }}>
+                {/* Right/Bottom Side: Content */}
+                <div className="project-card-content-col">
+                  <div style={{ display: "flex", gap: "1rem", alignItems: "center", marginBottom: "1.25rem" }}>
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.68rem", color: project.accentColor, letterSpacing: "0.15em", textTransform: "uppercase", background: "rgba(255,255,255,0.03)", padding: "0.25rem 0.75rem", borderRadius: "100px", border: "1px solid rgba(255,255,255,0.05)" }}>
                       ENGINEERING
                     </span>
-                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.7rem", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em" }}>
+                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.68rem", color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em" }}>
                       0{index + 1} / 0{projects.length}
                     </span>
                   </div>
                   
-                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 3vw, 3.5rem)", fontWeight: 700, color: "white", margin: "0 0 1.5rem 0", lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3.5vw, 3.2rem)", fontWeight: 700, color: "white", margin: "0 0 1rem 0", lineHeight: 1.15, letterSpacing: "-0.02em" }}>
                     {project.title}
                   </h3>
                   
-                  <p style={{ fontFamily: "var(--font-body)", fontSize: "1.1rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.7, margin: "0 0 auto 0" }}>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "clamp(0.88rem, 1.5vw, 1.05rem)", color: "rgba(255,255,255,0.6)", lineHeight: 1.65, margin: "0 0 auto 0" }}>
                     {project.summary}
                   </p>
                   
-                  <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginTop: "3rem", marginBottom: "3rem" }}>
+                  <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
                     {project.tags.slice(0, 4).map(tag => (
-                      <span key={tag} style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "rgba(255,255,255,0.4)", border: "1px solid rgba(255,255,255,0.1)", padding: "0.4rem 1rem", borderRadius: "4px" }}>
+                      <span key={tag} style={{ fontFamily: "var(--font-mono)", fontSize: "0.72rem", color: "rgba(255,255,255,0.45)", border: "1px solid rgba(255,255,255,0.1)", padding: "0.3rem 0.8rem", borderRadius: "4px" }}>
                         {tag}
                       </span>
                     ))}
                     {project.tags.length > 4 && (
-                      <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "rgba(255,255,255,0.3)", padding: "0.4rem 0" }}>
+                      <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.72rem", color: "rgba(255,255,255,0.3)", padding: "0.3rem 0" }}>
                         +{project.tags.length - 4} more
                       </span>
                     )}
                   </div>
 
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-display)", fontWeight: 600, color: "white", fontSize: "1.1rem" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: "var(--font-display)", fontWeight: 600, color: "white", fontSize: "1rem" }}>
                     View Project <span style={{ transition: "transform 0.3s ease" }} className="arrow">↗</span>
                   </div>
                 </div>

@@ -52,32 +52,15 @@ export default function Hero() {
         id="hero"
         ref={containerRef}
         aria-label="Introduction"
-        style={{
-          position: "relative",
-          minHeight: "100dvh",
-          backgroundColor: "#000000",
-          overflow: "hidden",
-          paddingTop: "64px",
-          display: "grid",
-          gridTemplateColumns: "56px 1fr 1fr",
-        }}
+        className="hero-container-grid"
       >
-        {/* Thin vertical grid lines */}
-        <div aria-hidden="true" style={{ position: "absolute", top: 0, bottom: 0, left: "56px", width: "1px", background: "rgba(255,255,255,0.05)", pointerEvents: "none" }} />
-        <div aria-hidden="true" style={{ position: "absolute", top: 0, bottom: 0, left: "50%", width: "1px", background: "rgba(255,255,255,0.04)", pointerEvents: "none" }} />
+        {/* Thin vertical grid lines (hidden on mobile) */}
+        <div aria-hidden="true" className="hero-vertical-line-1" />
+        <div aria-hidden="true" className="hero-vertical-line-2" />
 
-        {/* ── LEFT COLUMN: social links ──────── */}
+        {/* ── LEFT COLUMN: social links (Desktop) ──────── */}
         <div
-          className="hero-fade"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            borderRight: "1px solid rgba(255,255,255,0.05)",
-            zIndex: 10,
-            overflow: "visible", 
-          }}
+          className="hero-fade hero-social-dock-desktop"
         >
           <VerticalMagnificationDock
             items={SOCIAL_LINKS}
@@ -90,14 +73,7 @@ export default function Hero() {
 
         {/* ── MIDDLE COLUMN: typography ─────────────────────── */}
         <div 
-          style={{ 
-            display: "flex", 
-            flexDirection: "column", 
-            justifyContent: "center", 
-            padding: "clamp(2rem, 6vw, 5rem)", 
-            zIndex: 10,
-            perspective: "1000px" // For the 3D text rotate
-          }}
+          className="hero-content-col"
         >
           {/* Eyebrow */}
           <div className="hero-fade" style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.25rem" }}>
@@ -110,13 +86,13 @@ export default function Hero() {
           {/* Huge Serif Typography (Mina Massoud style) */}
           <div ref={textRef} style={{ fontFamily: "serif", textTransform: "uppercase", lineHeight: 0.9 }}>
             <div style={{ overflow: "hidden", paddingBottom: "0.1em" }}>
-              <h1 className="hero-line" style={{ fontSize: "clamp(3rem, 7vw, 7rem)", fontWeight: 400, color: "rgba(255,255,255,0.8)" }}>
+              <h1 className="hero-line" style={{ fontSize: "clamp(2.75rem, 8vw, 7rem)", fontWeight: 400, color: "rgba(255,255,255,0.8)" }}>
                 Om Hari
               </h1>
             </div>
             <div style={{ overflow: "hidden", paddingBottom: "0.1em" }}>
               <h1 className="hero-line" style={{ 
-                fontSize: "clamp(3rem, 7vw, 7rem)", 
+                fontSize: "clamp(2.75rem, 8vw, 7rem)", 
                 fontWeight: 300, 
                 color: "transparent", 
                 WebkitTextStroke: "1px rgba(255,255,255,0.5)" 
@@ -125,7 +101,7 @@ export default function Hero() {
               </h1>
             </div>
             <div style={{ overflow: "hidden", paddingBottom: "0.1em" }}>
-              <h1 className="hero-line" style={{ fontSize: "clamp(3rem, 7vw, 7rem)", fontWeight: 400, color: "rgba(255,255,255,0.8)" }}>
+              <h1 className="hero-line" style={{ fontSize: "clamp(2.75rem, 8vw, 7rem)", fontWeight: 400, color: "rgba(255,255,255,0.8)" }}>
                 & Builder
               </h1>
             </div>
@@ -137,26 +113,19 @@ export default function Hero() {
             color: "rgba(255,255,255,0.45)", 
             maxWidth: "380px", 
             lineHeight: 1.65, 
-            marginTop: "2rem",
-            marginBottom: "3rem" 
+            marginTop: "1.5rem",
+            marginBottom: "2rem" 
           }}>
             I build intelligent systems that work beyond the notebook. Click the core to initialize the AI.
           </p>
 
           <button
             suppressHydrationWarning
-            className="hero-fade"
+            className="hero-fade hero-cta-btn"
             onClick={() => voicesLoaded && setIsAiActive(true)}
             disabled={!voicesLoaded || isAiActive}
             style={{
-              alignSelf: "flex-start",
-              padding: "0.9rem 2.5rem",
-              border: "1px solid rgba(255,255,255,0.2)",
-              background: "transparent", color: "white",
-              fontFamily: "var(--font-mono)", fontSize: "0.78rem",
-              letterSpacing: "0.2em", textTransform: "uppercase",
               cursor: voicesLoaded ? "pointer" : "wait",
-              transition: "all 0.22s",
               opacity: isAiActive ? 0.3 : 1
             }}
             onMouseOver={(e) => { 
@@ -172,23 +141,49 @@ export default function Hero() {
           >
             {voicesLoaded ? "Initialize AI" : "Loading Voice..."}
           </button>
+
+          {/* Mobile Social Pills (shown only on mobile screens) */}
+          <div className="hero-social-mobile">
+            {SOCIAL_LINKS.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.7rem",
+                  letterSpacing: "0.1em",
+                  color: "rgba(255,255,255,0.5)",
+                  textDecoration: "none",
+                  padding: "0.4rem 0.8rem",
+                  borderRadius: "9999px",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  background: "rgba(255,255,255,0.03)",
+                  transition: "all 0.2s",
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.borderColor = "var(--color-accent)";
+                  e.currentTarget.style.color = "white";
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+                  e.currentTarget.style.color = "rgba(255,255,255,0.5)";
+                }}
+              >
+                {s.label}
+              </a>
+            ))}
+          </div>
         </div>
 
         {/* ── RIGHT COLUMN: Robotic Avatar ────────────────────────────── */}
         <div
-          className="hero-fade"
-          style={{
-            position: "relative",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 1,
-            overflow: "hidden",
-          }}
+          className="hero-fade hero-avatar-col"
         >
-          <div style={{ position: "absolute", top: "22%", right: "8%", textAlign: "right", zIndex: 3 }}>
+          <div style={{ position: "absolute", top: "12%", right: "8%", textAlign: "right", zIndex: 3 }}>
             <div style={{ width: "36px", height: "1px", background: "rgba(255,255,255,0.12)", marginLeft: "auto", marginBottom: "6px" }} />
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.58rem", color: "rgba(255,255,255,0.2)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.58rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
               {isAiActive ? "SYSTEM ONLINE" : "AI CORE STANDBY"}
             </span>
           </div>
